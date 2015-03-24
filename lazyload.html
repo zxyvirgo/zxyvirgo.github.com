@@ -32,11 +32,11 @@
 </div>
 <script type="text/javascript">
 	var image_array  = [],height = $(window).height(),index_now;
+	
 	$('.content img').each(function(index,elem){
-
-		if($(elem).offset().top >= height){
+		if($(elem).offset().top >= height){ 
 			image_array.push($(elem).attr('src'));
-			$(elem).attr({'src':"","class":"image-load"});
+			$(elem).attr({'src':"","class":"image-load"}); //默认让一些元素不加载
 		}else{
 			$(elem).attr("class","image");
 		}
@@ -50,7 +50,7 @@
 
 		var elem_now = $('.content img.image-load').eq(0),scroll_top = $(window).scrollTop();
 
-		if(elem_now.offset().top<scroll_top+height){
+		if(elem_now.offset().top<scroll_top+height){  //如果出现在屏幕中的的div还没加载，就加载它
 			elem_now.attr({'src':image_array.pop(),"class":"image"});
 		}
 	})
