@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>懒加载</title>
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta content="telephone=no" name="format-detection" />
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+  	<script type="text/javascript" src="http://js.40017.cn/touch/cn/public/zepto.20140212.js"></script>
+	<style type="text/css">
+      .content img{margin: 10px auto;display: block;width: 250px;height: 210px;}
+      .content img{
+		opacity: 0.5;
+      	background: #fff;
+      }
+		.content img.image{
+		 opacity:1;
+		transition:opacity 1s ease-out;
+		-webkit-transition:opacity 1s ease-out;
+		}
+		
+	</style>
+</head>
+<body>
+<div class="content">
+<img  src="http://img.17u.cn/ly/cn/img/zizhuyou/rimage/500_270/2014/5/5/201405050545513205.jpg">
+<img  src="http://img.17u.cn/ly/cn/img/zizhuyou/rimage/500_270/2013/10/22/201310220511118897.jpg">
+<img  src="http://upload.17u.com/uploadfile/scenerypic_common/300_225/2014/01/03/2/201401031007195324980.jpg">
+<img  src="http://upload.17u.com/uploadfile/scenerypic_common/300_225/2014/01/26/2/201401261109055104830.jpg">
+<img  src="http://upload.17u.com/uploadfile/scenerypic_common/300_225/2014/04/04/2/201404041624262951774.jpg">
+<img  src="http://upload.17u.com/uploadfile/scenerypic_common/300_225/2014/04/15/2/20140415145605441869.jpg">
+<img  src="http://upload.17u.com/uploadfile/scenerypic_common/300_225/2014/04/25/2/201404251309123248631.jpg">
+<img  src="http://upload.17u.cn/hotel/large/2014/6/17/a35aaf622fbc4e1aa2517df01bb10217.jpg">
+</div>
+<script type="text/javascript">
+	var image_array  = [],height = $(window).height(),index_now;
+	$('.content img').each(function(index,elem){
+
+		if($(elem).offset().top >= height){
+			image_array.push($(elem).attr('src'));
+			$(elem).attr({'src':"","class":"image-load"});
+		}else{
+			$(elem).attr("class","image");
+		}
+	});
+
+    $(window).on('scroll',function(e){
+
+		if(image_array.length == 0){
+			return;
+		}
+
+		var elem_now = $('.content img.image-load').eq(0),scroll_top = $(window).scrollTop();
+
+		if(elem_now.offset().top<scroll_top+height){
+			elem_now.attr({'src':image_array.pop(),"class":"image"});
+		}
+	})
+
+</script>
+</body>
+</html>
